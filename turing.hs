@@ -51,7 +51,10 @@ module Turing where
 --
 -- --------------------------------------------------------------------------
 
-    {-Aquí va tu código-}
+    escribe :: String -> Cinta -> Posicion -> Cinta
+    escribe nuevo cinta pos
+      | pos < 0 = cinta
+      | otherwise = take pos cinta ++ [nuevo] ++ drop (pos + 1) cinta
 
 -- --------------------------------------------------------------------------
 -- 5 La función que lee y devuelve un símbolo de la cinta debe devolver el
@@ -60,8 +63,11 @@ module Turing where
 --   Con esto en mente, definamos la función «lee». 
 -- --------------------------------------------------------------------------
 
-   {-Aquí va tu código-}
-    
+    lee :: Cinta -> Posicion -> String
+    lee cinta pos
+      | pos < 0 = head cinta
+      | otherwise = cinta !! pos
+
 -- --------------------------------------------------------------------------
 -- 6 Definamos un tipo de dato para las configuraciones que
 --   adopta la máquina durante su ejecución. 
