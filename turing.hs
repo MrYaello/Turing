@@ -119,7 +119,14 @@ module Turing where
 --   en los siguientes ejercicios. 
 -- --------------------------------------------------------------------------
 
-    {-Aquí va tu código-}
+    verConfiguracion :: Int -> Configuracion -> String
+    verConfiguracion n (estado, cinta, pos) =
+      "(" ++ show estado ++ ", " ++ listaCadena n cinta ++ ", " ++ show pos ++ ")"
+      where
+        listaCadena :: Int -> Cinta -> String
+        listaCadena longitud cinta =
+          let cintaV = take longitud cinta
+          in "[" ++ concatMap (++ ",") cintaV ++ "...]"
 
 -- --------------------------------------------------------------------------
 -- 10 El paso de una configuración a otra se da al aplicar una regla de
