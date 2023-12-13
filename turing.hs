@@ -202,9 +202,16 @@ module Turing where
 --    función «aplica» generando una secuencia de configuraciones hasta 
 --    llegar a un estado de aceptación o rechazo. 
 -- -------------------------------------------------------------------------- 
-
-   
-   {-Aquí va tu código-}
+--
+    aplicaRec :: [Transicion] -> Estado -> Estado -> Configuracion -> Resultado
+    aplicaRec reglasTransicion estadoAceptacion estadoRechazo configuracion
+      | estadoCinta configuracion == estadoAceptacion = Acepta
+      | estadoCinta configuracion == estadoRechazo = Rechaza
+      | otherwise = aplicaRec reglasTransicion estadoAceptacion estadoRechazo nuevaConfig
+      where
+        estadoCinta :: Configuracion -> Estado
+        estadoCinta (x, _, _) = x
+        nuevaConfig = aplica reglasTransicion configuracion
 
 
 -- -------------------------------------------------------------------------- 
@@ -212,9 +219,11 @@ module Turing where
 --    máquina de Turing, una cadena y devolverá un resultado que indique si 
 --    la máquina aceptó o rechazó dicha cadena. 
 -- -------------------------------------------------------------------------- 
-   
-
-   {-Aquí va tu código-}
+  
+    eval :: MT -> String -> Resultado
+    eval (_, _, _, marcadorFinal, blanco, delta, estadoInicial, estadoAceptacion, estadoRechazo) cadena =
+      aplicaRec delta estadoAceptacion estadoRechazo (estadoInicial, inicializa marcadorFinal blanco cadena, 0)
+      
 
 -- -------------------------------------------------------------------------- 
 -- 15 Define la máquina de Turing que acepta el lenguaje con igual número de
@@ -224,8 +233,17 @@ module Turing where
 --
 -- -------------------------------------------------------------------------- 
 
-    
-    {-Aquí va tu código-}
+    mt1 :: MT
+    mt1 = (q, sigma, gamma, final, blanco, delta, qs, qa, qr) where
+      q = [0,1,2,3,4,5,6,7,8,9,10,11,12]
+      sigma = ['a', 'b']
+      gamma = ["a", "b", blanco]
+      final = "|-"
+      blanco = "_"
+      delta = deltaTest
+      qs = 0
+      qa = 12
+      qr = 11
 
 -- -------------------------------------------------------------------------- 
 -- Aquí tenemos una función delta de prueba para revisar y corregir cualquier
