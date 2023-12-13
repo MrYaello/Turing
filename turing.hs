@@ -18,7 +18,19 @@ module Turing where
 --
 -- --------------------------------------------------------------------------
 
-    {-Aquí va tu código-}
+    inicializa :: String -> String -> String -> Cinta
+    inicializa "" "" "" = []
+    inicializa final blanco cadena = cinta
+      where 
+        cinta = final : cadenap cadena ++ blancos 
+          where
+            cadenap :: String -> [String]
+            cadenap "" = []
+            cadenap (x:xs) = [x] : cadenap xs 
+      
+            blancos :: [String]
+            blancos = blanco : blancos
+  
 
 -- --------------------------------------------------------------------------
 -- 3 Definamos un par de funciones que nos permitan leer y escribir sobre
