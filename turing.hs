@@ -174,7 +174,23 @@ module Turing where
 --   en el proceso de ejecución de la máquina.  
 -- -------------------------------------------------------------------------- 
     
-    {-Aquí va tu código-}
+    aplica :: [Transicion] -> Configuracion -> Configuracion
+    aplica reglasTransicion configuracion =
+      case sigTransicion reglasTransicion configuracion of
+        [] -> error "No hay reglas de transicion aplicables."
+        [transicion] -> aplicarTransicion transicion configuracion
+        _ -> error $ "Configuración " ++ verConfiguracion 15 configuracion ++ " con más de una regla aplicable: " ++ show reglasTransicion
+
+    aplicarTransicion :: Transicion -> Configuracion -> Configuracion
+    aplicarTransicion (_, _, nuevoEstado, nuevoSimbolo, movimiento) (_, cinta, posicionCinta) =
+      let nuevaCinta = escribe nuevoSimbolo cinta posicionCinta
+          nuevaPosicion = nuevaPosicionCinta posicionCinta movimiento
+      in (nuevoEstado, nuevaCinta, nuevaPosicion)
+      where
+        nuevaPosicionCinta :: Posicion -> Mov -> Posicion
+        nuevaPosicionCinta pos D = pos + 1
+        nuevaPosicionCinta pos I = max 0 (pos - 1)
+        nuevaPosicionCinta pos N = pos
 
 -- -------------------------------------------------------------------------- 
 -- 13 Si conocemos cuáles son los estados de aceptación y rechazo de 
