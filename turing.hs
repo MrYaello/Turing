@@ -29,8 +29,7 @@ module Turing where
             cadenap (x:xs) = [x] : cadenap xs 
       
             blancos :: [String]
-            blancos = blanco : blancos
-  
+            blancos = blanco : blancos 
 
 -- --------------------------------------------------------------------------
 -- 3 Definamos un par de funciones que nos permitan leer y escribir sobre
@@ -90,7 +89,7 @@ module Turing where
     data Mov = D | I | N   
        deriving Show 
 
-    type Estado = Int
+    type Estado = Integer
 
     type Transicion = (Estado, String, Estado, String, Mov)
 
@@ -147,7 +146,9 @@ module Turing where
 --   Definamos una función que responda a esta pregunta:
 -- --------------------------------------------------------------------------  
 
-   {-Aquí va tu código-}
+    aplicable :: Transicion -> Configuracion -> Bool
+    aplicable (estadoActual, simboloActual, _, _, _) (estadoCinta, cinta, pos) =
+      estadoActual == estadoCinta && simboloActual == lee cinta pos
 
 -- --------------------------------------------------------------------------  
 -- 11 Con la función anteiror podemos seleccionar de entre las reglas definidas
@@ -162,7 +163,9 @@ module Turing where
 --   
 -- --------------------------------------------------------------------------  
 
-    {-Aquí va tu código-}
+    sigTransicion :: [Transicion] -> Configuracion -> [Transicion]
+    sigTransicion reglasTransicion configuracion =
+      filter (\transicion -> aplicable transicion configuracion) reglasTransicion
 
 -- -------------------------------------------------------------------------- 
 -- 12 Con las funciones anteriores podemos escribir el cuerpo de la función
